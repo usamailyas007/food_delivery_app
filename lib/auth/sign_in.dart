@@ -1,8 +1,18 @@
 import 'package:auth_buttons/auth_buttons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class SignIn extends StatelessWidget {
+import '../home_screen.dart';
+
+class SignIn extends StatefulWidget {
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +34,8 @@ class SignIn extends StatelessWidget {
                   children: [
                     Text(
                       "Sign in to continue",
-                      style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey.shade700),
+                      style: TextStyle(fontWeight: FontWeight.bold,
+                          color: Colors.grey.shade700),
                     ),
                     Text(
                       'Vegi',
@@ -49,7 +60,9 @@ class SignIn extends StatelessWidget {
                         ),
                         GoogleAuthButton(
                           text: 'Sign up with Google',
-                          onPressed: () {},
+                          onPressed: () {
+
+                          },
                         ),
                       ],
                     ),
