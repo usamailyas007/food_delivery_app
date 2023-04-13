@@ -1,5 +1,6 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -12,6 +13,24 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  SignInWithGoogle() async {
+    try {
+      final GoogleSignIn _googleSignIn = GoogleSignIn(
+        scopes: ['email'],
+      );
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      UserCredential user =
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    }catch(e){
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +46,15 @@ class _SignInState extends State<SignIn> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 400,
+                height: 500,
                 width: double.infinity,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Sign in to continue",
-                      style: TextStyle(fontWeight: FontWeight.bold,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           color: Colors.grey.shade700),
                     ),
                     Text(
@@ -49,20 +69,35 @@ class _SignInState extends State<SignIn> {
                                 offset: Offset(3, 5))
                           ]),
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Column(
                       children: [
-                        AppleAuthButton(
-                          onPressed: () {},
-                          text: 'Sign up with Apple',
+                        Container(
+                          height: 45,
+                          width: 270,
+                          child: AppleAuthButton(
+                            onPressed: () {},
+                            text: 'Sign up with Apple',
+                          ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
-                        GoogleAuthButton(
-                          text: 'Sign up with Google',
-                          onPressed: () {
-
-                          },
+                        Container(
+                          width: 270,
+                          height: 45,
+                          child: GoogleAuthButton(
+                            text: 'Sign up with Google',
+                            onPressed: () {
+                              SignInWithGoogle().then((value) =>
+                                  Navigator.of(context)
+                                      .pushReplacement(MaterialPageRoute(
+                                    builder: (context) => HomeScreen(),
+                                  )));
+                            },
+                          ),
                         ),
                       ],
                     ),
