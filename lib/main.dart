@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/screens/home_screen.dart';
+import 'package:food_app/config/colors.dart';
+import 'package:food_app/screens/home/home_screen.dart';
 
 import 'auth/sign_in.dart';
 
@@ -18,10 +19,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      home: SignIn(),
-    );
+      theme: ThemeData(
+          primaryColor: primaryColor,
+          scaffoldBackgroundColor: scaffoldBackgroundColor),
+        debugShowCheckedModeBanner: false,
+        home: SignIn()
+      );
   }
 }
 

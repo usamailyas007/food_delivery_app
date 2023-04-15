@@ -1,100 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/screens/home/drawer_side.dart';
+import 'package:food_app/screens/home/single_product.dart';
+import 'package:food_app/screens/product_overview/product_overview.dart';
 
-class HomeScreen extends StatelessWidget {
-  Widget singleProduct(){
-    return  Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      height: 230,
-      width: 160,
-      decoration: BoxDecoration(
-          color: Color(0xffd9dad9),
-          borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-              flex: 2,
-              child: Container(
-                child: Image.asset('assets/images/basil.png'),
-              )),
-          Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 5, horizontal: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Fresh Basil',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      '50\$/50 Gram',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Row(
-                        children: [
-                          Expanded(child: Container(
-                            padding: EdgeInsets.only(left: 3),
-                            height: 30,
-                            width: 50,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: Colors.grey)
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  '50 Grams',
-                                  style: TextStyle(
-                                      fontSize: 9),
-                                ),
-                                Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 25,
-                                  color: Color(0xffd6b740),
-                                )
-                              ],
-                            ),
-                          )),
-                          SizedBox(width: 5,),
-                          Expanded(child: Container(
-                            height: 30,
-                            width: 50,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: Colors.grey)
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(Icons.remove,size: 15,color: Color(0xffd6b740)),
-                                Text('1',style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xffd6b740)),),
-                                Icon(Icons.add,size: 15,color: Color(0xffd6b740))
-                              ],
-                            ),
-                          ))
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ))
-        ],
-      ),
-    );
-  }
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffcbcbcb),
-      drawer: Drawer(),
+      drawer: DrawerSide(),
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Color(0xffd6b738),
@@ -223,10 +144,24 @@ class HomeScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                singleProduct(),
-                singleProduct(),
-                singleProduct(),
-                singleProduct(),
+                SingleProduct(
+                    productImage: 'assets/images/basil.png',
+                    onTap: () {
+
+                    },
+                    productName: 'Fresh Basil'),
+                SingleProduct(
+                    productImage: 'assets/images/mint.png',
+                    onTap: () {},
+                    productName: 'Fresh Mint'),
+                SingleProduct(
+                    productImage: 'assets/images/parsley.png',
+                    onTap: () {},
+                    productName: 'Fresh Parsley'),
+                SingleProduct(
+                    productImage: 'assets/images/dill.png',
+                    onTap: () {},
+                    productName: 'Fresh Dill'),
               ],
             ),
           ),
@@ -235,7 +170,9 @@ class HomeScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Fresh Fruits',),
+                Text(
+                  'Fresh Fruits',
+                ),
                 Text(
                   'View all',
                   style: TextStyle(
@@ -248,13 +185,62 @@ class HomeScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                singleProduct(),
-                singleProduct(),
-                singleProduct(),
-                singleProduct(),
+                SingleProduct(
+                    productImage: 'assets/images/berries.png',
+                    onTap: () {},
+                    productName: 'Barries'),
+                SingleProduct(
+                    productImage: 'assets/images/watermelon.png',
+                    onTap: () {},
+                    productName: 'Watermelon'),
+                SingleProduct(
+                    productImage: 'assets/images/grapes.png',
+                    onTap: () {},
+                    productName: 'Grapes'),
+                SingleProduct(
+                    productImage: 'assets/images/peach.png',
+                    onTap: () {},
+                    productName: 'Peach'),
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Root Vegetables'),
+                Text(
+                  'View all',
+                  style: TextStyle(
+                      color: Colors.grey, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                SingleProduct(
+                    productImage: 'assets/images/carrots.png',
+                    onTap: () {},
+                    productName: 'Carrots'),
+                SingleProduct(
+                    productImage: 'assets/images/beets.png',
+                    onTap: () {},
+                    productName: 'Beets'),
+                SingleProduct(
+                    productImage: 'assets/images/radish.png',
+                    onTap: () {},
+                    productName: 'Radishes'),
+                SingleProduct(
+                    productImage: 'assets/images/turnips.png',
+                    onTap: () {},
+                    productName: 'Turnips')
+              ],
+            ),
+          )
         ],
       ),
     );
