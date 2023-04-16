@@ -1,9 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:food_app/screens/my_profile/my_profile.dart';
+import 'package:food_app/screens/product_overview/product_overview.dart';
 
-class DrawerSide extends StatelessWidget{
-  Widget listTile(IconData icon, String title) {
+class DrawerSide extends StatefulWidget{
+  @override
+  State<DrawerSide> createState() => _DrawerSideState();
+}
+
+class _DrawerSideState extends State<DrawerSide> {
+  Widget listTile(IconData icon, String title,Function onTap) {
     return ListTile(
+      onTap: onTap(),
       leading: Icon(
         icon,
         size: 32,
@@ -14,6 +23,7 @@ class DrawerSide extends StatelessWidget{
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -49,7 +59,9 @@ class DrawerSide extends StatelessWidget{
                             height: 30,
                             width: 80,
                             child: OutlinedButton(
-                              onPressed: () {},
+                              onPressed: () {
+
+                              },
                               child: Text(
                                 'Login',
                                 style: TextStyle(
@@ -66,14 +78,16 @@ class DrawerSide extends StatelessWidget{
                     )
                   ],
                 )),
-            listTile(Icons.home_outlined, 'Home'),
-            listTile(Icons.shop_outlined, 'Review Cart'),
-            listTile(Icons.person_outlined, 'My Profile'),
-            listTile(Icons.notifications_outlined, 'Notifications'),
-            listTile(Icons.star_outline, 'Rating & Reviews'),
-            listTile(Icons.favorite_outline, 'Wishlist'),
-            listTile(Icons.copy_outlined, 'Raise & Complain'),
-            listTile(Icons.format_quote_outlined, 'FAQs'),
+            listTile(Icons.home_outlined, 'Home',(){}),
+            listTile(Icons.shop_outlined, 'Review Cart',(){}),
+            listTile(Icons.person_outlined, 'My Profile',(){
+
+            }),
+            listTile(Icons.notifications_outlined, 'Notifications',(){}),
+            listTile(Icons.star_outline, 'Rating & Reviews',(){}),
+            listTile(Icons.favorite_outline, 'Wishlist',(){}),
+            listTile(Icons.copy_outlined, 'Raise & Complain',(){}),
+            listTile(Icons.format_quote_outlined, 'FAQs',(){}),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               height: 350,
@@ -126,5 +140,4 @@ class DrawerSide extends StatelessWidget{
       ),
     );
   }
-
 }

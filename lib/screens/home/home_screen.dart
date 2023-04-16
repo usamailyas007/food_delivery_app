@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:food_app/screens/home/drawer_side.dart';
 import 'package:food_app/screens/home/single_product.dart';
 import 'package:food_app/screens/product_overview/product_overview.dart';
@@ -10,6 +11,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void _navigateToSecondPage(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) =>ProductOverview(
+        productImage: 'assets/images/basil.png',
+        productName: 'Fresh Basil'),
+    )
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SingleProduct(
                     productImage: 'assets/images/basil.png',
                     onTap: () {
-
+                      WidgetsBinding.instance.addPostFrameCallback((_) =>_navigateToSecondPage(context));
                     },
                     productName: 'Fresh Basil'),
                 SingleProduct(
