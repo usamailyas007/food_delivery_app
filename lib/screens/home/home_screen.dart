@@ -5,19 +5,7 @@ import 'package:food_app/screens/home/drawer_side.dart';
 import 'package:food_app/screens/home/single_product.dart';
 import 'package:food_app/screens/product_overview/product_overview.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  void _navigateToSecondPage(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) =>ProductOverview(
-        productImage: 'assets/images/basil.png',
-        productName: 'Fresh Basil'),
-    )
-    );
-  }
+class HomeScreen extends StatelessWidget {
 
 
   @override
@@ -156,16 +144,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 SingleProduct(
                     productImage: 'assets/images/basil.png',
                     onTap: () {
-                      WidgetsBinding.instance.addPostFrameCallback((_) =>_navigateToSecondPage(context));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProductOverview(
+                          productImage: 'assets/images/basil.png',
+                          productName: 'Fresh Basil',
+                        ),));
                     },
                     productName: 'Fresh Basil'),
                 SingleProduct(
                     productImage: 'assets/images/mint.png',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProductOverview(
+                        productName: 'assets/images/mint.png',
+                        productImage: 'Fresh Mint',
+                      ),));
+                    },
                     productName: 'Fresh Mint'),
                 SingleProduct(
                     productImage: 'assets/images/parsley.png',
-                    onTap: () {},
+                    onTap: () {
+
+                    },
                     productName: 'Fresh Parsley'),
                 SingleProduct(
                     productImage: 'assets/images/dill.png',

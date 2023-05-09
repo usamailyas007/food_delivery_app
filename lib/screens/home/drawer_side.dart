@@ -4,15 +4,11 @@ import 'package:flutter/scheduler.dart';
 import 'package:food_app/screens/my_profile/my_profile.dart';
 import 'package:food_app/screens/product_overview/product_overview.dart';
 
-class DrawerSide extends StatefulWidget{
-  @override
-  State<DrawerSide> createState() => _DrawerSideState();
-}
+class DrawerSide extends StatelessWidget{
 
-class _DrawerSideState extends State<DrawerSide> {
-  Widget listTile(IconData icon, String title,Function onTap) {
+  Widget listTile(IconData icon, String title,VoidCallback onTap) {
     return ListTile(
-      onTap: onTap(),
+      onTap: onTap,
       leading: Icon(
         icon,
         size: 32,
@@ -81,7 +77,7 @@ class _DrawerSideState extends State<DrawerSide> {
             listTile(Icons.home_outlined, 'Home',(){}),
             listTile(Icons.shop_outlined, 'Review Cart',(){}),
             listTile(Icons.person_outlined, 'My Profile',(){
-
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfile(),));
             }),
             listTile(Icons.notifications_outlined, 'Notifications',(){}),
             listTile(Icons.star_outline, 'Rating & Reviews',(){}),

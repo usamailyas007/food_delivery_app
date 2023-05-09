@@ -66,6 +66,7 @@ class _ProductOverviewState extends State<ProductOverview> {
         ],
       ),
       appBar: AppBar(
+        backgroundColor: const Color(0xffd1ad17),
         iconTheme: IconThemeData(color: textColor),
         title: Text(
           'Product Overview',

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class SingleProduct extends StatefulWidget{
   final String productImage;
   final String productName;
-  final Function onTap;
+  final VoidCallback onTap;
   SingleProduct({required this.productImage,required this.onTap,required this.productName});
 
   @override
@@ -27,13 +27,13 @@ class _SingleProductState extends State<SingleProduct> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-            onTap: widget.onTap(),
+          InkWell(
+            onTap: widget.onTap,
             child: Container(
               height: 150,
               padding: EdgeInsets.all(5),
               width: double.infinity,
-              child: Image.asset(widget.productImage),
+              child: InkWell(child: Image.asset(widget.productImage)),
             ),
           ),
           Expanded(
