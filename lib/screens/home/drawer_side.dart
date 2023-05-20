@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:food_app/screens/my_profile/my_profile.dart';
-import 'package:food_app/screens/product_overview/product_overview.dart';
+import '../review_cart/review_cart.dart';
+import 'home_screen.dart';
 
 class DrawerSide extends StatelessWidget{
 
@@ -74,8 +73,12 @@ class DrawerSide extends StatelessWidget{
                     )
                   ],
                 )),
-            listTile(Icons.home_outlined, 'Home',(){}),
-            listTile(Icons.shop_outlined, 'Review Cart',(){}),
+            listTile(Icons.home_outlined, 'Home',(){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MyHome(),));
+            }),
+            listTile(Icons.shop_outlined, 'Review Cart',(){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewCart(),));
+            }),
             listTile(Icons.person_outlined, 'My Profile',(){
               Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfile(),));
             }),

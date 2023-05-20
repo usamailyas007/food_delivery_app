@@ -1,15 +1,33 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:food_app/screens/home/drawer_side.dart';
+import 'package:food_app/providers/product_provider.dart';
 import 'package:food_app/screens/home/single_product.dart';
-import 'package:food_app/screens/product_overview/product_overview.dart';
+import 'package:provider/provider.dart';
+import '../product_overview/product_overview.dart';
+import '../review_cart/review_cart.dart';
+import '../search/search.dart';
+import 'drawer_side.dart';
 
-class HomeScreen extends StatelessWidget {
+class MyHome extends StatefulWidget {
 
 
   @override
+  State<MyHome> createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<MyHome> {
+   late ProductProvider productProvider;
+
+  @override
+  void initState() {
+    ProductProvider productProvider = Provider.of(context,listen: false);
+    productProvider.fetchHerbsProductData();
+    productProvider.fetchFruitsProductData();
+    productProvider.fetchVegetablesProductData();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+     productProvider = Provider.of(context);
     return Scaffold(
       backgroundColor: Color(0xffcbcbcb),
       drawer: DrawerSide(),
@@ -24,9 +42,16 @@ class HomeScreen extends StatelessWidget {
         actions: [
           CircleAvatar(
             radius: 17,
-            child: Icon(
-              Icons.search,
-              color: Colors.black,
+            child: InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Search(
+                  search: productProvider.getAllProductSearch,
+                ),));
+              },
+              child: Icon(
+                Icons.search,
+                color: Colors.black,
+              ),
             ),
             backgroundColor: Color(0xffd4d181),
           ),
@@ -34,9 +59,14 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: CircleAvatar(
               radius: 17,
-              child: Icon(
-                Icons.shop_outlined,
-                color: Colors.black,
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewCart(),));
+                },
+                child: Icon(
+                  Icons.shop_outlined,
+                  color: Colors.black,
+                ),
               ),
               backgroundColor: Color(0xffd4d181),
             ),
@@ -62,62 +92,62 @@ class HomeScreen extends StatelessWidget {
                     flex: 2,
                     child: Container(
                         child: Column(
-                      children: [
-                        Padding(
-                          padding:
+                          children: [
+                            Padding(
+                              padding:
                               const EdgeInsets.only(right: 265, bottom: 10),
-                          child: Container(
-                            height: 50,
-                            width: 100,
-                            decoration: BoxDecoration(
-                                color: Color(0xffd6b740),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(3),
-                                    bottomRight: Radius.circular(50),
-                                    bottomLeft: Radius.circular(50))),
-                            child: Center(
-                                child: Container(
-                              margin: EdgeInsets.only(bottom: 10),
-                              child: Text(
-                                'Vegi',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    shadows: [
-                                      BoxShadow(
-                                          color: Colors.green,
-                                          blurRadius: 2,
-                                          offset: Offset(2, 2))
-                                    ]),
+                              child: Container(
+                                height: 50,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    color: Color(0xffd6b740),
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(3),
+                                        bottomRight: Radius.circular(50),
+                                        bottomLeft: Radius.circular(50))),
+                                child: Center(
+                                    child: Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Text(
+                                        'Vegi',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            shadows: [
+                                              BoxShadow(
+                                                  color: Colors.green,
+                                                  blurRadius: 2,
+                                                  offset: Offset(2, 2))
+                                            ]),
+                                      ),
+                                    )),
                               ),
-                            )),
-                          ),
-                        ),
-                        Text(
-                          '30% off',
-                          style: TextStyle(
-                              shadows: [
-                                BoxShadow(
-                                    color: Colors.green,
-                                    blurRadius: 4,
-                                    offset: Offset(3, 3))
-                              ],
-                              fontSize: 40,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30),
-                          child: Text(
-                            'On all vegetables products',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      ],
-                    )),
+                            ),
+                            Text(
+                              '30% off',
+                              style: TextStyle(
+                                  shadows: [
+                                    BoxShadow(
+                                        color: Colors.green,
+                                        blurRadius: 4,
+                                        offset: Offset(3, 3))
+                                  ],
+                                  fontSize: 40,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 30),
+                              child: Text(
+                                'On all vegetables products',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            )
+                          ],
+                        )),
                   ),
                 ],
               ),
@@ -129,10 +159,17 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Herbs Seasoning'),
-                Text(
-                  'View all',
-                  style: TextStyle(
-                      color: Colors.grey, fontWeight: FontWeight.bold),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Search(
+                      search: productProvider.getHerbsProductDataList,
+                    ),));
+                  },
+                  child: Text(
+                    'View all',
+                    style: TextStyle(
+                        color: Colors.grey, fontWeight: FontWeight.bold),
+                  ),
                 )
               ],
             ),
@@ -140,36 +177,21 @@ class HomeScreen extends StatelessWidget {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: [
-                SingleProduct(
-                    productImage: 'assets/images/basil.png',
+              children: productProvider.getHerbsProductDataList.map((herbsProductData) {
+                return SingleProduct(
+                    productImage: herbsProductData.productImage,
+                    productPrice: herbsProductData.productPrice,
+                    productId: herbsProductData.productId,
                     onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProductOverview(
-                          productImage: 'assets/images/basil.png',
-                          productName: 'Fresh Basil',
-                        ),));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>ProductOverview(
+                      productImage: herbsProductData.productImage,
+                      productPrice: herbsProductData.productPrice,
+                      productName: herbsProductData.productName),
+                      )
+                      );
                     },
-                    productName: 'Fresh Basil'),
-                SingleProduct(
-                    productImage: 'assets/images/mint.png',
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProductOverview(
-                        productName: 'assets/images/mint.png',
-                        productImage: 'Fresh Mint',
-                      ),));
-                    },
-                    productName: 'Fresh Mint'),
-                SingleProduct(
-                    productImage: 'assets/images/parsley.png',
-                    onTap: () {
-
-                    },
-                    productName: 'Fresh Parsley'),
-                SingleProduct(
-                    productImage: 'assets/images/dill.png',
-                    onTap: () {},
-                    productName: 'Fresh Dill'),
-              ],
+                    productName: herbsProductData.productName);
+              }).toList()
             ),
           ),
           Padding(
@@ -180,10 +202,17 @@ class HomeScreen extends StatelessWidget {
                 Text(
                   'Fresh Fruits',
                 ),
-                Text(
-                  'View all',
-                  style: TextStyle(
-                      color: Colors.grey, fontWeight: FontWeight.bold),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Search(
+                      search: productProvider.getFruitsProductDataList,
+                    ),));
+                  },
+                  child: Text(
+                    'View all',
+                    style: TextStyle(
+                        color: Colors.grey, fontWeight: FontWeight.bold),
+                  ),
                 )
               ],
             ),
@@ -191,24 +220,22 @@ class HomeScreen extends StatelessWidget {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: [
-                SingleProduct(
-                    productImage: 'assets/images/berries.png',
-                    onTap: () {},
-                    productName: 'Barries'),
-                SingleProduct(
-                    productImage: 'assets/images/watermelon.png',
-                    onTap: () {},
-                    productName: 'Watermelon'),
-                SingleProduct(
-                    productImage: 'assets/images/grapes.png',
-                    onTap: () {},
-                    productName: 'Grapes'),
-                SingleProduct(
-                    productImage: 'assets/images/peach.png',
-                    onTap: () {},
-                    productName: 'Peach'),
-              ],
+              children: productProvider.getFruitsProductDataList.map((fruitsProductData) {
+                return  SingleProduct(
+                  productId: fruitsProductData.productId,
+                    productImage: fruitsProductData.productImage,
+                    productPrice: fruitsProductData.productPrice,
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>ProductOverview(
+                          productImage: fruitsProductData.productImage,
+                          productPrice: fruitsProductData.productPrice,
+                          productName: fruitsProductData.productName),
+                      )
+                      );
+                    },
+                    productName: fruitsProductData.productName);
+
+              }).toList()
             ),
           ),
           Padding(
@@ -217,10 +244,17 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Root Vegetables'),
-                Text(
-                  'View all',
-                  style: TextStyle(
-                      color: Colors.grey, fontWeight: FontWeight.bold),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Search(
+                      search: productProvider.getVegetablesProductDataList,
+                    ),));
+                  },
+                  child: Text(
+                    'View all',
+                    style: TextStyle(
+                        color: Colors.grey, fontWeight: FontWeight.bold),
+                  ),
                 )
               ],
             ),
@@ -228,24 +262,22 @@ class HomeScreen extends StatelessWidget {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: [
-                SingleProduct(
-                    productImage: 'assets/images/carrots.png',
-                    onTap: () {},
-                    productName: 'Carrots'),
-                SingleProduct(
-                    productImage: 'assets/images/beets.png',
-                    onTap: () {},
-                    productName: 'Beets'),
-                SingleProduct(
-                    productImage: 'assets/images/radish.png',
-                    onTap: () {},
-                    productName: 'Radishes'),
-                SingleProduct(
-                    productImage: 'assets/images/turnips.png',
-                    onTap: () {},
-                    productName: 'Turnips')
-              ],
+              children: productProvider.getVegetablesProductDataList.map((vegetablesProductData){
+                return SingleProduct(
+                  productId: vegetablesProductData.productId,
+                    productImage: vegetablesProductData.productImage,
+                    productPrice: vegetablesProductData.productPrice,
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>ProductOverview(
+                          productImage: vegetablesProductData.productImage,
+                          productPrice: vegetablesProductData.productPrice,
+                          productName: vegetablesProductData.productName),
+                      )
+                      );
+                    },
+                    productName: vegetablesProductData.productName);
+
+              } ).toList()
             ),
           )
         ],
