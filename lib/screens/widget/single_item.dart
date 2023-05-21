@@ -108,41 +108,49 @@ class SingleItem extends StatelessWidget {
                             ],
                           ),
                         )
-                      : Column(
-                          children: [
-                            InkWell(
-                              onTap: onDelete,
-                              child: Icon(
-                                Icons.delete,
-                                size: 30,
-                                color: Colors.black45,
+                      : Padding(
+                        padding: const EdgeInsets.only(top: 17),
+                        child: Column(
+                            children: [
+                              InkWell(
+                                onTap: onDelete,
+                                child: Icon(
+                                  Icons.delete,
+                                  size: 30,
+                                  color: Colors.black45,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                              height: 25,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                border: Border.all(color: Colors.grey),
+                              SizedBox(
+                                height: 5,
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.add,
-                                    size: 20,
-                                    color: primaryColor,
-                                  ),
-                                  Text('ADD',
-                                      style: TextStyle(color: primaryColor))
-                                ],
+                              Container(
+                                height: 25,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                      color: primaryColor,
+                                    ),
+                                    Text('1',
+                                        style: TextStyle(color: primaryColor)),
+                                    Icon(
+                                      Icons.add,
+                                      size: 20,
+                                      color: primaryColor,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                      ),
                 ),
               ),
             ],

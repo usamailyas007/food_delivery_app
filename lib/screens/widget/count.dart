@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,8 +27,27 @@ class _AddProductState extends State<AddProduct> {
   int count = 1;
   bool isTrue = false;
 
+  getAddAndQuantity() {
+    FirebaseFirestore.instance.collection('ReviewCart').doc(
+        FirebaseAuth.instance.currentUser!.uid)
+        .collection('YourReviewCart')
+        .doc(widget.productId)
+        .get()
+        .then((value) => {
+          if(this.mounted){
+            if(value.exists){
+              setState((){
+                count = value.get('cartQuantity');
+                isTrue = value.get('isAdd');
+              })
+            }
+          }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    getAddAndQuantity();
     ReviewCartProvider reviewCartProvider =
     Provider.of<ReviewCartProvider>(context);
     return Container(
@@ -45,11 +66,14 @@ class _AddProductState extends State<AddProduct> {
                 setState(() {
                   isTrue = false;
                 });
+                reviewCartProvider.reviewCartDataDelete(widget.productId);
               }
               if (count > 1) {
                 setState(() {
                   count--;
                 });
+                reviewCartProvider.updateReviewCartData( widget.productPrice, count, widget.productName,
+                  widget.productImage, widget.productId,);
               }
             },
             child: Icon(Icons.remove, size: 15, color: Color(0xffd6b740)),
@@ -64,6 +88,8 @@ class _AddProductState extends State<AddProduct> {
                 setState(() {
                   count++;
                 });
+                reviewCartProvider.updateReviewCartData( widget.productPrice, count, widget.productName,
+                  widget.productImage, widget.productId,);
               },
               child: Icon(Icons.add, size: 15, color: Color(0xffd6b740)))
         ],
@@ -76,7 +102,7 @@ class _AddProductState extends State<AddProduct> {
             });
             reviewCartProvider.addReviewCartData(
                 widget.productPrice, count, widget.productName,
-                widget.productImage, widget.productId);
+                widget.productImage, widget.productId,);
           },
           child: Text(
             'ADD',

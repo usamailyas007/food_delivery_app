@@ -1,14 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/config/colors.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/wish_list_provider.dart';
 
 enum SigninCharacter { fill, outline }
 
 class ProductOverview extends StatefulWidget {
   String productName;
   String productImage;
+  String productId;
   int productPrice;
-  ProductOverview({required this.productImage,required this.productName,required this.productPrice});
+
+  ProductOverview({required this.productImage,
+    required this.productName,
+    required this.productPrice,
+    required this.productId,
+  });
+
   @override
   State<ProductOverview> createState() => _ProductOverviewState();
 }
@@ -16,49 +26,67 @@ class ProductOverview extends StatefulWidget {
 class _ProductOverviewState extends State<ProductOverview> {
   SigninCharacter _character = SigninCharacter.fill;
 
-  Widget bottomNavigatorBar({
-    required Color iconColor,
+  Widget bottomNavigatorBar({required Color iconColor,
     required Color backgroundColor,
     required Color color,
     required String title,
     required IconData iconData,
-  }) {
+    required VoidCallback onTap}) {
     return Expanded(
-        child: Container(
-      padding: EdgeInsets.all(20),
-      color: backgroundColor,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            iconData,
-            size: 17,
-            color: iconColor,
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            padding: EdgeInsets.all(20),
+            color: backgroundColor,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  iconData,
+                  size: 20,
+                  color: iconColor,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  title,
+                  style: TextStyle(color: color),
+                )
+              ],
+            ),
           ),
-          SizedBox(
-            width: 5,
-          ),
-          Text(
-            title,
-            style: TextStyle(color: color),
-          )
-        ],
-      ),
-    ));
+        ));
   }
+
+  bool wishListBool = false;
 
   @override
   Widget build(BuildContext context) {
+    WishListProvider wishListProvider = Provider.of(context);
     return Scaffold(
       bottomNavigationBar: Row(
         children: [
           bottomNavigatorBar(
+              onTap: () {
+                setState(() {
+                  wishListBool = !wishListBool;
+                });
+                if (wishListBool == true) {
+                  wishListProvider.addWishListData(
+                      widget.productPrice, 2, widget.productName,
+                      widget.productImage, widget.productId);
+                }
+              },
               iconColor: Colors.grey,
               backgroundColor: textColor,
               color: Colors.white70,
               title: 'Add To WishList',
-              iconData: Icons.favorite_outline),
+              iconData: wishListBool == false
+                  ? Icons.favorite_outline
+                  : Icons.favorite),
           bottomNavigatorBar(
+              onTap: () {},
               iconColor: Colors.white70,
               backgroundColor: primaryColor,
               color: textColor,
@@ -152,24 +180,25 @@ class _ProductOverviewState extends State<ProductOverview> {
               )),
           Expanded(
               child: Container(
-            padding: EdgeInsets.all(20),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'About This Product',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                padding: EdgeInsets.all(20),
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'About This Product',
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                        'A product description is the marketing copy that explains what a product is and why it’s worth purchasing. The purpose of a product description is to supply customers with important information about the features and key benefits of the product so they’re compelled to buy.',
+                        style: TextStyle(color: textColor, fontSize: 16))
+                  ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                    'A product description is the marketing copy that explains what a product is and why it’s worth purchasing. The purpose of a product description is to supply customers with important information about the features and key benefits of the product so they’re compelled to buy.',
-                    style: TextStyle(color: textColor, fontSize: 16))
-              ],
-            ),
-          ))
+              ))
         ],
       ),
     );

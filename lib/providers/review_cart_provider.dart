@@ -6,7 +6,7 @@ import '../model/review_cart_model.dart';
 
 class ReviewCartProvider with ChangeNotifier {
   void addReviewCartData(int cartPrice, int cartQuantity, String cartName,
-      String cartImage, String cartId) async {
+      String cartImage, String cartId,) async {
     await FirebaseFirestore.instance
         .collection('ReviewCart')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -17,7 +17,27 @@ class ReviewCartProvider with ChangeNotifier {
       'cartImage': cartImage,
       'cartId': cartId,
       'cartPrice': cartPrice,
-      'cartQuantity': cartQuantity
+      'cartQuantity': cartQuantity,
+      'isAdd': true
+    });
+  }
+
+  //////////////////////////////////////////////Update ReviewcartData//////////////////////////////////////////////////
+
+  void updateReviewCartData(int cartPrice, int cartQuantity, String cartName,
+      String cartImage, String cartId,) async {
+    await FirebaseFirestore.instance
+        .collection('ReviewCart')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('YourReviewCart')
+        .doc(cartId)
+        .update({
+      'cartName': cartName,
+      'cartImage': cartImage,
+      'cartId': cartId,
+      'cartPrice': cartPrice,
+      'cartQuantity': cartQuantity,
+      'isAdd': true
     });
   }
 

@@ -184,6 +184,7 @@ class _MyHomeState extends State<MyHome> {
                     productId: herbsProductData.productId,
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) =>ProductOverview(
+                        productId: herbsProductData.productId,
                       productImage: herbsProductData.productImage,
                       productPrice: herbsProductData.productPrice,
                       productName: herbsProductData.productName),
@@ -228,6 +229,7 @@ class _MyHomeState extends State<MyHome> {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) =>ProductOverview(
                           productImage: fruitsProductData.productImage,
+                          productId: fruitsProductData.productId,
                           productPrice: fruitsProductData.productPrice,
                           productName: fruitsProductData.productName),
                       )
@@ -269,6 +271,7 @@ class _MyHomeState extends State<MyHome> {
                     productPrice: vegetablesProductData.productPrice,
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) =>ProductOverview(
+                        productId: vegetablesProductData.productId,
                           productImage: vegetablesProductData.productImage,
                           productPrice: vegetablesProductData.productPrice,
                           productName: vegetablesProductData.productName),
