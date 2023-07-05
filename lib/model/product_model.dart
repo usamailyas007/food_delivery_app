@@ -1,7 +1,14 @@
-class ProductModel{
+class ProductModel {
   String productName;
   String productImage;
   String productId;
   int productPrice;
-  ProductModel({required this.productImage,required this.productName,required this.productPrice,required this.productId});
+  int productQuantity;
+
+  ProductModel(
+      {required this.productImage,
+      required this.productName,
+      required this.productPrice,
+      required this.productId,
+      required this.productQuantity});
 }

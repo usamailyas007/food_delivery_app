@@ -2,8 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/config/colors.dart';
 import 'package:food_app/screens/home/drawer_side.dart';
+import 'package:provider/provider.dart';
 
-class MyProfile extends StatelessWidget{
+import '../../model/user_model.dart';
+import '../../providers/user_provider.dart';
+
+class MyProfile extends StatefulWidget{
+  UserProvider userProvider;
+  MyProfile({required this.userProvider});
+
+  @override
+  State<MyProfile> createState() => _MyProfileState();
+}
+
+class _MyProfileState extends State<MyProfile> {
   Widget listTile(String title,IconData icon){
     return Column(
       children: [
@@ -18,6 +30,7 @@ class MyProfile extends StatelessWidget{
       ],
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +41,7 @@ class MyProfile extends StatelessWidget{
         backgroundColor: const Color(0xffd1ad17),
         title: Text('My Profile',style: TextStyle(fontSize: 18,color: textColor),)
       ),
-      drawer: DrawerSide(),
+      drawer: DrawerSide(userProvider: widget.userProvider, ),
       body: Stack(
         children: [
           Column(
@@ -60,14 +73,14 @@ class MyProfile extends StatelessWidget{
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Usama Ilyas',style: TextStyle(
+                                Text('Usama',style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                   color: textColor
                                 ),
                                 ),
                                 SizedBox(height: 10,),
-                                Text('Usil4d@gmail.com')
+                                Text('admin@gmail.com')
                               ],
                             ),
                             SizedBox(width: 40,),
@@ -102,7 +115,9 @@ class MyProfile extends StatelessWidget{
               radius: 50,
               backgroundColor: primaryColor,
               child: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/lgo1.png'),
+                backgroundImage: NetworkImage(
+                  'https://w7.pngwing.com/pngs/387/365/png-transparent-100-natural-products-illustration-frankincense-perfume-logo-food-label-s-food-leaf-label-thumbnail.png'
+                ),
                 radius: 45,
                 backgroundColor: Colors.amber,
               ),

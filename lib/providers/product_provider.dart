@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
 import '../model/product_model.dart';
+
 
 class ProductProvider with ChangeNotifier {
   late ProductModel productModel;
@@ -10,11 +9,12 @@ class ProductProvider with ChangeNotifier {
   List<ProductModel>search = [];
   allProductModels(QueryDocumentSnapshot element){
     productModel = ProductModel(
-
-      productId: element.get('productId'),
+        productQuantity: element.get('productQuantity'),
+        productId: element.get('productId'),
         productImage: element.get('productImage'),
         productName: element.get('productName'),
         productPrice: element.get('productPrice'));
+    print('working successfully: ${productModel.productId}');
     search.add(productModel);
   }
 
@@ -25,7 +25,7 @@ class ProductProvider with ChangeNotifier {
   fetchHerbsProductData() async {
     List<ProductModel> newList = [];
     QuerySnapshot ref =
-        await FirebaseFirestore.instance.collection('HerbsProduct').get();
+    await FirebaseFirestore.instance.collection('HerbsProduct').get();
 
     ref.docs.forEach((element) {
       allProductModels(element);

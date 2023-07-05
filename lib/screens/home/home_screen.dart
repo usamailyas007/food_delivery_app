@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/providers/product_provider.dart';
+import 'package:food_app/providers/user_provider.dart';
 import 'package:food_app/screens/home/single_product.dart';
 import 'package:provider/provider.dart';
+import '../../providers/product_provider.dart';
 import '../product_overview/product_overview.dart';
 import '../review_cart/review_cart.dart';
 import '../search/search.dart';
 import 'drawer_side.dart';
 
 class MyHome extends StatefulWidget {
-
-
   @override
   State<MyHome> createState() => _MyHomeState();
 }
@@ -19,18 +18,19 @@ class _MyHomeState extends State<MyHome> {
 
   @override
   void initState() {
-    ProductProvider productProvider = Provider.of(context,listen: false);
-    productProvider.fetchHerbsProductData();
-    productProvider.fetchFruitsProductData();
-    productProvider.fetchVegetablesProductData();
+    ProductProvider initproductProvider = Provider.of(context,listen: false);
+    initproductProvider.fetchHerbsProductData();
+    initproductProvider.fetchFruitsProductData();
+    initproductProvider.fetchVegetablesProductData();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
      productProvider = Provider.of(context);
+     UserProvider userProvider = Provider.of(context);
     return Scaffold(
       backgroundColor: Color(0xffcbcbcb),
-      drawer: DrawerSide(),
+      drawer: DrawerSide(userProvider: userProvider),
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Color(0xffd6b738),

@@ -41,8 +41,11 @@ dependencies:
   google_sign_in: ^6.1.0
   flutter_launcher_icons: "^0.13.1"
   cloud_firestore: ^4.7.1
+  fluttertoast: ^8.2.2
   provider: ^6.0.5
   cached_network_image: ^3.2.3
+  google_maps_flutter:
+  location:
 
 dev_dependencies:
   flutter_test:

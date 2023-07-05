@@ -64,6 +64,7 @@ class _SearchState extends State<Search> {
             children: _searchItem.map((data) {
               return  SingleItem(
                 onDelete: (){},
+                wishList: true,
                 isBool: false,
                 productQuantity: 1,
                 productId: data.productId,

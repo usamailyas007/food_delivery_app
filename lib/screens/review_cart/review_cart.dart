@@ -4,6 +4,7 @@ import 'package:food_app/model/review_cart_model.dart';
 import 'package:food_app/providers/review_cart_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../checkout/delivery-page/delivery_details.dart';
 import '../widget/single_item.dart';
 
 class ReviewCart extends StatelessWidget {
@@ -54,7 +55,9 @@ class ReviewCart extends StatelessWidget {
         title: Text('Total Amount'),
         subtitle: Text('\$ 170.00',style: TextStyle(color: Colors.green.shade900),),
         trailing: InkWell(
-          onTap: (){},
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => DeliveryDetails(),));
+          },
           child: Container(
             width: 160,
             height: 45,
@@ -90,6 +93,8 @@ class ReviewCart extends StatelessWidget {
                 productId: data.cartId,
                 productQuantity: data.cartQuantity,
                 isBool: true,
+                wishList: false,
+
               ),
             ],
           );

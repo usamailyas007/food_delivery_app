@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/model/user_model.dart';
+import 'package:food_app/providers/user_provider.dart';
 import 'package:food_app/screens/my_profile/my_profile.dart';
 import '../review_cart/review_cart.dart';
+import '../wishlist/wishlist_screen.dart';
 import 'home_screen.dart';
 
-class DrawerSide extends StatelessWidget{
+class DrawerSide extends StatefulWidget {
+  late UserProvider userProvider;
 
-  Widget listTile(IconData icon, String title,VoidCallback onTap) {
+  DrawerSide({required this.userProvider});
+
+  @override
+  State<DrawerSide> createState() => _DrawerSideState();
+}
+
+class _DrawerSideState extends State<DrawerSide> {
+  Widget listTile(IconData icon, String title, VoidCallback onTap) {
     return ListTile(
       onTap: onTap,
       leading: Icon(
@@ -28,65 +39,65 @@ class DrawerSide extends StatelessWidget{
           children: [
             DrawerHeader(
                 child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.white54,
-                      radius: 43,
-                      child: ClipOval(
-                        child: CircleAvatar(
-                          backgroundColor: Colors.amber,
-                          backgroundImage: AssetImage('assets/images/lgo1.png'),
-                          radius: 40,
-                        ),
-                      ),
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.white54,
+                  radius: 43,
+                  child: ClipOval(
+                    child: CircleAvatar(
+                      backgroundColor: Colors.amber,
+                      backgroundImage: NetworkImage(
+                          'https://w7.pngwing.com/pngs/387/365/png-transparent-100-natural-products-illustration-frankincense-perfume-logo-food-label-s-food-leaf-label-thumbnail.png'),
+                      radius: 40,
                     ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Welcome Guest'),
-                        SizedBox(
-                          height: 7,
-                        ),
-                        Container(
-                            height: 30,
-                            width: 80,
-                            child: OutlinedButton(
-                              onPressed: () {
-
-                              },
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              style: ButtonStyle(
-                                  shape: MaterialStatePropertyAll(
-                                      RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15),
-                                          side: BorderSide(width: 2)))),
-                            ))
-                      ],
-                    )
-                  ],
-                )),
-            listTile(Icons.home_outlined, 'Home',(){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyHome(),));
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 50),
+                  child: Column(
+                    children: [
+                      Text('Usama'),
+                      Text('admin@gmail.com'),
+                    ],
+                  ),
+                )
+              ],
+            )),
+            listTile(Icons.home_outlined, 'Home', () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyHome(),
+                  ));
             }),
-            listTile(Icons.shop_outlined, 'Review Cart',(){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewCart(),));
+            listTile(Icons.shop_outlined, 'Review Cart', () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReviewCart(),
+                  ));
             }),
-            listTile(Icons.person_outlined, 'My Profile',(){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfile(),));
+            listTile(Icons.person_outlined, 'My Profile', () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyProfile(userProvider: widget.userProvider),
+                  ));
             }),
-            listTile(Icons.notifications_outlined, 'Notifications',(){}),
-            listTile(Icons.star_outline, 'Rating & Reviews',(){}),
-            listTile(Icons.favorite_outline, 'Wishlist',(){}),
-            listTile(Icons.copy_outlined, 'Raise & Complain',(){}),
-            listTile(Icons.format_quote_outlined, 'FAQs',(){}),
+            listTile(Icons.notifications_outlined, 'Notifications', () {}),
+            listTile(Icons.star_outline, 'Rating & Reviews', () {}),
+            listTile(Icons.favorite_outline, 'Wishlist', () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WishListScreen(),
+                  ));
+            }),
+            listTile(Icons.copy_outlined, 'Raise & Complain', () {}),
+            listTile(Icons.format_quote_outlined, 'FAQs', () {}),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               height: 350,

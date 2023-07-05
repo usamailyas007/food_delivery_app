@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/count.dart';
@@ -69,27 +68,65 @@ class _SingleProductState extends State<SingleProduct> {
                           child: Row(
                               children: [
                           Expanded(
-                          child: Container(
-                          padding: EdgeInsets.only(left: 3),
-                          height: 30,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.grey)),
-                          child: Row(
-                            children: [
-                              Text(
-                                '50 Grams',
-                                style: TextStyle(fontSize: 9),
-                              ),
-                              Icon(
-                                Icons.arrow_drop_down,
-                                size: 25,
-                                color: Color(0xffd6b740),
-                              )
-                            ],
-                          ),
-                        )),
+                          child: InkWell(
+                            onTap: (){
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        ListTile(
+                                          title: new Text('250 Grams'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                        ListTile(
+                                          title: new Text('500 Grams'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                        ListTile(
+                                          title: new Text('750 Grams'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                        ListTile(
+                                          title: new Text('1 Kg'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+
+                            },
+                            child: Container(
+                            padding: EdgeInsets.only(left: 3),
+                            height: 30,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Colors.grey)),
+                            child: Row(
+                              children: [
+                                Text(
+                                  '50 Grams',
+                                  style: TextStyle(fontSize: 9),
+                                ),
+                                Icon(
+                                  Icons.arrow_drop_down,
+                                  size: 25,
+                                  color: Color(0xffd6b740),
+                                )
+                              ],
+                            ),
+                        ),
+                          )),
                     SizedBox(
                       width: 5,
                     ),

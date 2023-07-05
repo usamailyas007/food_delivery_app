@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-
 import '../model/review_cart_model.dart';
 
 class ReviewCartProvider with ChangeNotifier {
@@ -69,12 +68,12 @@ class ReviewCartProvider with ChangeNotifier {
   }
 
   ///////////////////////////////review cart delete////////////////////////////////////////////////
-  reviewCartDataDelete(cardId) {
+  reviewCartDataDelete(cartId) {
     FirebaseFirestore.instance
         .collection('ReviewCart')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('YourReviewCart')
-        .doc(cardId)
+        .doc(cartId)
         .delete();
     notifyListeners();
   }

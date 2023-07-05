@@ -1,11 +1,10 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/providers/user_provider.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/provider.dart';
 
+
+import '../providers/user_provider.dart';
 import '../screens/home/home_screen.dart';
 
 class SignIn extends StatefulWidget {
@@ -38,7 +37,6 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: Container(
           height: double.infinity,
